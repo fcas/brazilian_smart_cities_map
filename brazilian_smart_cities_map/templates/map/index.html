@@ -10,8 +10,8 @@
             function setApiUrl()
             {
                 var baseUrl = "https://maps.googleapis.com/maps/api/js?key=";
-                var endUrl = "&libraries=places&callback=initAutocomplete";
                 var accesskey= properties.token;
+                var endUrl = "&libraries=places&callback=initApplication";
                 var apiUrl = baseUrl.concat(accesskey).concat(endUrl);
                 document.getElementById("apiUrl").src = apiUrl;
             }

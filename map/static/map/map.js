@@ -3,6 +3,29 @@ TwitterUsernames =
     Curitiba_PMC: 0
 };
 
+function initApplication()
+{
+    callEndpoint("tweets");
+    initMap();
+}
+
+function initMap()
+{
+    var map = new google.maps.Map(document.getElementById('map'),
+        {
+            center:
+            {
+                lat: -13.5413498,
+                lng: -71.5506764
+            },
+            zoom: 4,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+    setLayer(map);
+    setSearchBox(map);
+}
+
 function callEndpoint(endpointName)
 {
     for (var username in TwitterUsernames)
@@ -36,44 +59,29 @@ function setLayer(map)
             templateId: 2
         },
         styles:
-        [
-            {
-                polygonOptions:
+            [
                 {
-                    fillColor: '#38761d',
-                }
-            },
-            {
-                where: '\'_tweetCreatedAt_mean\' > 4',
-                polygonOptions:
+                    polygonOptions:
+                    {
+                        fillColor: '#38761d',
+                    }
+                },
                 {
-                    fillColor: '#0000FF',
-                    fillOpacity: 0.3
+                    where: '\'_tweetCreatedAt_mean\' > 4',
+                    polygonOptions:
+                    {
+                        fillColor: '#0000FF',
+                        fillOpacity: 0.3
+                    }
                 }
-            }
-        ]
+            ]
     });
 
     layer.setMap(map);
 }
 
-function initAutocomplete()
+function setSearchBox(map)
 {
-    callEndpoint("tweets");
-
-    var map = new google.maps.Map(document.getElementById('map'),
-    {
-        center:
-        {
-            lat: -13.5413498,
-            lng: -71.5506764
-        },
-        zoom: 4,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    setLayer(map);
-
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
