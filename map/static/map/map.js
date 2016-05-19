@@ -257,6 +257,7 @@ function processAverageCallback(jsonResponse)
     if (columnName == '_tweetCreatedAt_mean')
     {
         tweetsMean = average
+        setLayer('avg_tweets')
     }
     else if (columnName == '_responseTime_mean')
     {
