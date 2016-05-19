@@ -5,7 +5,7 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <meta charset="utf-8">
         <title>Brazilian Smart Cities</title>
-        <link rel="stylesheet" type="text/css" href="{% static "map/map.css" %}"">
+        <link rel="stylesheet" type="text/css" href="/static/map/map.css">
         <script>
             function setApiUrl()
             {
@@ -23,5 +23,6 @@
     <body>
         <input id="pac-input" class="controls" type="text" placeholder="Search Box">
         <div id="map"></div>
+        <select id="layers" style="position: absolute; top: 8%; left: 0.6%; z-index: 99; width: 420px;"></select>
     </body>
 </html>
