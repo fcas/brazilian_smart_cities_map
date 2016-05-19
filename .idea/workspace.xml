@@ -97,11 +97,10 @@
       <file leaf-file-name="map.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/map/static/map/map.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.70894676">
-              <caret line="259" column="30" selection-start-line="259" selection-start-column="30" selection-end-line="259" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.45526615">
+              <caret line="59" column="67" selection-start-line="59" selection-start-column="67" selection-end-line="59" selection-end-column="67" />
               <folding>
                 <element signature="n#!!block;n#setLegend#0" expanded="false" />
-                <element signature="n#!!block;n#setSearchBox#0" expanded="false" />
                 <element signature="n#!!block;n#callEndpoint#0" expanded="false" />
                 <element signature="n#!!block;n#getTweetMean#0" expanded="false" />
                 <element signature="n#!!block;n#getResponseTimeMean#0" expanded="false" />
@@ -109,12 +108,14 @@
                 <element signature="n#!!block;n#getRepliesMean#0" expanded="false" />
                 <element signature="n#!!block;n#getRetweetsMean#0" expanded="false" />
                 <element signature="n#!!block;n#getMentionsMean#0" expanded="false" />
-                <element signature="e#7725#7762#0" expanded="false" />
-                <element signature="e#7893#9109#0" expanded="false" />
-                <element signature="e#10419#11631#0" expanded="false" />
-                <element signature="e#11670#12894#0" expanded="false" />
-                <element signature="e#12934#14142#0" expanded="false" />
-                <element signature="e#14182#15416#0" expanded="false" />
+                <element signature="n#!!block;n#processAverageCallback#0" expanded="false" />
+                <element signature="e#7643#7680#0" expanded="false" />
+                <element signature="n#!!block;n#setLayer#0" expanded="false" />
+                <element signature="e#7811#9027#0" expanded="false" />
+                <element signature="e#10337#11549#0" expanded="false" />
+                <element signature="e#11588#12812#0" expanded="false" />
+                <element signature="e#12852#14060#0" expanded="false" />
+                <element signature="e#14100#15334#0" expanded="false" />
                 <element signature="n#!!block;n#setLayersComboBox#0" expanded="false" />
               </folding>
             </state>
@@ -994,7 +995,7 @@
       <workItem from="1463522459286" duration="5153000" />
       <workItem from="1463585203088" duration="623000" />
       <workItem from="1463605671483" duration="26702000" />
-      <workItem from="1463693913223" duration="4340000" />
+      <workItem from="1463693913223" duration="4633000" />
     </task>
     <task id="LOCAL-00001" summary="project commit">
       <created>1459686097108</created>
@@ -1014,11 +1015,17 @@
       <option name="project" value="LOCAL" />
       <updated>1463699024518</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="code review">
+      <created>1463699321988</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1463699321988</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63986000" />
+    <option name="totallyTimeSpent" value="64279000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1440" y="64" width="1920" height="1003" extended-state="0" />
@@ -1305,6 +1312,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1442,11 +1450,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/map/static/map/map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70894676">
-          <caret line="259" column="30" selection-start-line="259" selection-start-column="30" selection-end-line="259" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.45526615">
+          <caret line="59" column="67" selection-start-line="59" selection-start-column="67" selection-end-line="59" selection-end-column="67" />
           <folding>
             <element signature="n#!!block;n#setLegend#0" expanded="false" />
-            <element signature="n#!!block;n#setSearchBox#0" expanded="false" />
             <element signature="n#!!block;n#callEndpoint#0" expanded="false" />
             <element signature="n#!!block;n#getTweetMean#0" expanded="false" />
             <element signature="n#!!block;n#getResponseTimeMean#0" expanded="false" />
@@ -1454,12 +1461,14 @@
             <element signature="n#!!block;n#getRepliesMean#0" expanded="false" />
             <element signature="n#!!block;n#getRetweetsMean#0" expanded="false" />
             <element signature="n#!!block;n#getMentionsMean#0" expanded="false" />
-            <element signature="e#7725#7762#0" expanded="false" />
-            <element signature="e#7893#9109#0" expanded="false" />
-            <element signature="e#10419#11631#0" expanded="false" />
-            <element signature="e#11670#12894#0" expanded="false" />
-            <element signature="e#12934#14142#0" expanded="false" />
-            <element signature="e#14182#15416#0" expanded="false" />
+            <element signature="n#!!block;n#processAverageCallback#0" expanded="false" />
+            <element signature="e#7643#7680#0" expanded="false" />
+            <element signature="n#!!block;n#setLayer#0" expanded="false" />
+            <element signature="e#7811#9027#0" expanded="false" />
+            <element signature="e#10337#11549#0" expanded="false" />
+            <element signature="e#11588#12812#0" expanded="false" />
+            <element signature="e#12852#14060#0" expanded="false" />
+            <element signature="e#14100#15334#0" expanded="false" />
             <element signature="n#!!block;n#setLayersComboBox#0" expanded="false" />
           </folding>
         </state>
