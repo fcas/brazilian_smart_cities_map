@@ -52,6 +52,75 @@ function setLegend()
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 }
 
+function setSearchBox()
+{
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    //map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(layersComboBox);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function()
+    {
+        searchBox.setBounds(map.getBounds());
+    });
+
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function()
+    {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0)
+        {
+            return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function(marker)
+        {
+            marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place)
+        {
+            var icon =
+            {
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker
+            ({
+                map: map,
+                icon: icon,
+                title: place.name,
+                position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport)
+            {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+            }
+            else
+            {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
+    });
+}
+
 function callEndpoint(endpointName)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -80,7 +149,7 @@ function getTweetMean()
     }
 
     // true for asynchronous
-    xmlHttp.open("GET", "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20'_tweetCreatedAt_mean'%20FROM%20" + properties.token + "&key=" + properties.tableId, true);
+    xmlHttp.open("GET", "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20'_tweetCreatedAt_mean'%20FROM%20" + properties.tableId + "&key=" + properties.token, true);
     xmlHttp.send(null)
 }
 
@@ -96,7 +165,7 @@ function getResponseTimeMean()
     }
 
     // true for asynchronous
-    xmlHttp.open("GET", "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20'_responseTime_mean'%20FROM%20" + properties.token + "&key=" + properties.tableId, true);
+    xmlHttp.open("GET", "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20'_responseTime_mean'%20FROM%20" + properties.tableId + "&key=" + properties.token, true);
     xmlHttp.send(null)
 }
 
@@ -511,73 +580,4 @@ function setLayersComboBox()
     option5.value = "avg_response_time";
     option5.text  = "Média de tempo de resposta";
     layersComboBox.add(option5, layersComboBox.options[5]);
-}
-
-function setSearchBox()
-{
-    // Create the search box and link it to the UI element.
-    var input = document.getElementById('pac-input');
-    var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    //map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(layersComboBox);
-
-    // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', function()
-    {
-        searchBox.setBounds(map.getBounds());
-    });
-
-    var markers = [];
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
-    searchBox.addListener('places_changed', function()
-    {
-        var places = searchBox.getPlaces();
-
-        if (places.length == 0)
-        {
-            return;
-        }
-
-        // Clear out the old markers.
-        markers.forEach(function(marker)
-        {
-            marker.setMap(null);
-        });
-        markers = [];
-
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place)
-        {
-            var icon =
-            {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker
-            ({
-                map: map,
-                icon: icon,
-                title: place.name,
-                position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport)
-            {
-                // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-            }
-            else
-            {
-                bounds.extend(place.geometry.location);
-            }
-        });
-        map.fitBounds(bounds);
-    });
 }
