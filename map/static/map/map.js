@@ -5,6 +5,8 @@ var favoritesMean
 var repliesMean
 var retweetsMean
 var mentionMean
+var positiveSentimentSparkMean
+var positiveSentimentStormMean
 var layer
 
 function initApplication()
@@ -17,6 +19,8 @@ function initApplication()
     getRepliesMean();
     getRetweetsMean();
     getMentionsMean();
+    getPositiveSentimentSparkMean();
+    getPositiveSentimentStormMean();
     initMap();
     setLayersComboBox();
 }
@@ -232,6 +236,38 @@ function getMentionsMean()
     xmlHttp.send(null)
 }
 
+function getPositiveSentimentSparkMean()
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function()
+    {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        {
+            processAverageCallback(xmlHttp.responseText);
+        }
+    }
+
+    // true for asynchronous
+    xmlHttp.open("GET", "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20'_positiveSentiment_spark'%20FROM%20" + properties.tableId + "&key=" + properties.token, true);
+    xmlHttp.send(null)
+}
+
+function getPositiveSentimentStormMean()
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function()
+    {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        {
+            processAverageCallback(xmlHttp.responseText);
+        }
+    }
+
+    // true for asynchronous
+    xmlHttp.open("GET", "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20'_positiveSentiment_storm'%20FROM%20" + properties.tableId + "&key=" + properties.token, true);
+    xmlHttp.send(null)
+}
+
 function processAverageCallback(jsonResponse)
 {
     var column = JSON.parse(jsonResponse)
@@ -277,6 +313,14 @@ function processAverageCallback(jsonResponse)
     else if (columnName == '_tweetCreatedAt_mention_mean')
     {
         mentionMean = average
+    }
+    else if (columnName == '_positiveSentiment_spark')
+    {
+        positiveSentimentSparkMean = average
+    }
+    else if (columnName == '_positiveSentiment_storm')
+    {
+        positiveSentimentStormMean = average
     }
 }
 
@@ -538,6 +582,89 @@ function setLayer(option)
         });
         layer.setMap(map);
     }
+
+    if (option == 'sentiments_spark')
+    {
+        layer = new google.maps.FusionTablesLayer({
+            query:
+            {
+                select: "geometry",
+                from: properties.tableId,
+            },
+            options:
+            {
+                styleId: 2,
+                templateId: 2
+            },
+            styles:
+                [
+                    {
+                        polygonOptions:
+                        {
+                            fillColor: '#38761d',
+                        }
+                    },
+                    {
+                        where: '\'_positiveSentiment_spark\'' + '>' + positiveSentimentSparkMean.toString(),
+                        polygonOptions:
+                        {
+                            fillColor: '#0000FF',
+                            fillOpacity: 0.3
+                        }
+                    },
+                    {
+                        where: '\'_positiveSentiment_spark\'' + '<' + positiveSentimentSparkMean.toString(),
+                        polygonOptions:
+                        {
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.3
+                        }
+                    }
+                ]
+        });
+        layer.setMap(map);
+    }
+    if (option == 'sentiments_storm')
+    {
+        layer = new google.maps.FusionTablesLayer({
+            query:
+            {
+                select: "geometry",
+                from: properties.tableId,
+            },
+            options:
+            {
+                styleId: 2,
+                templateId: 2
+            },
+            styles:
+                [
+                    {
+                        polygonOptions:
+                        {
+                            fillColor: '#38761d',
+                        }
+                    },
+                    {
+                        where: '\'_positiveSentiment_storm\'' + '>' + positiveSentimentStormMean.toString(),
+                        polygonOptions:
+                        {
+                            fillColor: '#0000FF',
+                            fillOpacity: 0.3
+                        }
+                    },
+                    {
+                        where: '\'_positiveSentiment_storm\'' + '<' + positiveSentimentStormMean.toString(),
+                        polygonOptions:
+                        {
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.3
+                        }
+                    }
+                ]
+        });
+        layer.setMap(map);
+    }
 }
 
 function setLayersComboBox()
@@ -580,4 +707,16 @@ function setLayersComboBox()
     option5.value = "avg_response_time";
     option5.text  = "Média de tempo de resposta";
     layersComboBox.add(option5, layersComboBox.options[5]);
+
+    var layersComboBox = document.getElementById('layers')
+    var option5 = document.createElement('option')
+    option5.value = "sentiments_spark";
+    option5.text  = "Sentimentos (22/05/2016)";
+    layersComboBox.add(option5, layersComboBox.options[6]);
+
+    var layersComboBox = document.getElementById('layers')
+    var option5 = document.createElement('option')
+    option5.value = "sentiments_storm";
+    option5.text  = "Sentimentos (23/05/2016)";
+    layersComboBox.add(option5, layersComboBox.options[7]);
 }
